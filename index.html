@@ -1,11 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Autodoc</title>
-    <h1>Hello this is auto doc</h1>
-</head>
-<body>
+<!--suppress ALL -->
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>searchrefiner - WordSuggestion</title>
+        <link rel="icon" href="/static/favicon.png" type="image/x-png">
+        <link rel="stylesheet" href="/static/spectre.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/spectre-icons.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/spectre-exp.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/vis.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/vue-multiselect.min.css" type="text/css">
+        <link rel="stylesheet" href="/static/logtail.css" type="text/css">
+        <link rel="stylesheet" href="/static/searchrefiner.css" type="text/css">
+        <script src="/static/vue.js" type="text/javascript"></script>
+        <script src="/static/vue.js" type="text/javascript"></script>
+        <script src="/static/vue-infinite-scroll.js" type="text/javascript"></script>
+        <script src="/static/lodash.min.js" type="text/javascript"></script>
+        <script src="/static/Sortable.min.js"></script>
+        <script src="/static/vuedraggable.min.js"></script>
+    </head>
+    <body>
+        <div class="container p-2" id="app">
+            <header class="navbar bg-secondary nav-height">
+                <section class="navbar-section"><a href="/"><i class="icon icon-arrow-left"></i>back</a></section>
+            </header>
+            <div class="divider"></div>
+            <div class="panel p-2" style="overflow:hidden;">
+                <h2>Auto Doc</h2>
+                <div class="divider"></div>
+                <div class="panel-body container">
+                    <div>
+                        <textarea name="query" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8" required></textarea>
+                    </div>
+                </div>
+                <div class="divider"></div>
+                <a href="#">Clear All</a>
+                <div class="panel-footer">
+                    <button class="btn btn-primary" id="generate-report">
+                        <i class="icon icon-forward"></i> Generate
+                    </button>
+                    <div class="divider"></div>
+                    <p>Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
+                </div>
+            </div>
+        </div>
+        <script>
+            var vm = new Vue({
+                delimiters: ["[[", "]"],
+                el: "#app",
+                data: {
 
-</body>
+                },
+                methods: {
+
+                }
+            })
+        </script>
+    </body>
 </html>
