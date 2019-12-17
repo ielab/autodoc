@@ -25,12 +25,36 @@
             </header>
             <div class="divider"></div>
             <div class="panel p-2" style="overflow:hidden;">
-                <h2>Auto Doc</h2>
+                <h2 style="margin-left: 2%; margin-top: 1%">Auto Doc</h2>
                 <div class="divider"></div>
                 <div class="panel-body container">
-                    <div>
-                        <textarea name="query" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8" required></textarea>
-                    </div>
+                    <ul style="list-style-type: none;">
+                        <li><span class="span-rg"><strong>Date Search Was Run</strong><span style="color:red">*</span>:</span></li>
+                        <li><input class="panel-body" type="date" style="overflow:hidden;width:12%;" id="date"></li>
+                        <li><span class="span-rg"><strong>Years Covered By Search</strong><span style="color:red">*</span>:</span></li>
+                        <li>
+                            <input class="panel-body" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="fromyear"> -
+                            <input class="panel-body" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="toyear">
+                        </li>
+                        <li><span class="span-rg"><strong>Database Searched</strong><span style="color:red">*</span>:</span></li>
+                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="database"></li>
+                        <li><span class="span-rg"><strong>Name of Host</strong><span style="color:red">*</span>:</span></li>
+                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="host"></li>
+                        <li><span class="span-rg"><strong>Language Restriction</strong><span style="color:red">*</span>:</span></li>
+                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="lang"></li>
+                        <li><span class="span-rg"><strong>Search Strategy Summary</strong><span style="color:red">*</span>:</span></li>
+                        <li>
+                            <div>
+                                <textarea style="width: 40%" name="summary" class="form-input" id="summary-input" placeholder="Enter The Search Strategy Summary" rows="2"></textarea>
+                            </div>
+                        </li>
+                        <li><span class="span-rg"><strong>Complete Query</strong><span style="color:red">*</span>:</span></li>
+                        <li>
+                            <div>
+                                <textarea style="width: 40%" name="query" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8"></textarea>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
                 <div class="divider"></div>
                 <a href="#">Clear All</a>
@@ -40,6 +64,12 @@
                     </button>
                     <div class="divider"></div>
                     <p>Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
+                    <div>
+                        <div style="text-align: center;"><h5>Search Strategy Report</h5></div>
+                        <div>
+                            <textarea style="width: 100%" name="report" class="form-input" id="report" rows="10"></textarea>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
