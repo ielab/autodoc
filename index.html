@@ -151,16 +151,7 @@
             <div class="divider"></div>
             <div class="panel p-2" style="overflow:hidden;">
                 <h2 style="margin-left: 2%; margin-top: 1%">Auto Doc</h2>
-                <div class="divider"></div>
-                <div class="panel-body">
-                    <builder id="info-builder" v-for="(info, index) in infos"
-                             :key="info.id"
-                             v-on:add="addInfo"
-                             v-on:remove="removeInfo"
-                             v-bind:info="info"
-                             v-bind:index="index"
-                             v-bind:last="index==infos.length-1"></builder>
-                </div>
+                <div class="divider" data-content="GENERAL INFORMATION"></div>
                 <div class="panel-footer container">
                     <ul style="list-style-type: none;">
                         <li>
@@ -233,30 +224,17 @@
                                 <textarea style="width: 40%" name="lang" v-model="langRestriction" class="form-input" id="lang-input" placeholder="Enter The Language Restrictions" rows="2"></textarea>
                             </div>
                         </li>
-                        <li>
-                            <span class="span-rg">
-                                <strong>
-                                    Complete Search Strategy
-                                </strong>
-                                <span style="color:red">
-                                    *
-                                </span>
-                                :
-                                <div class="help-tip" style="z-index: 10">
-                                    <p>The <i>Cochrane Handbook</i> indicates that search strategies should be copied and pasted rather than retyped to avoid unwanted errors.</br>
-                                        This is the most important element of the search report. The complete search strategy should be included so that the reader can assess
-                                        the quality of the search and, thus, the quality of the review. Inadequate searches or errors in search strategies can affect the quality
-                                        of the review and lead to bias. A complete search strategy is also essential when a review is revised or updated.
-                                    </p>
-                                </div>
-                            </span>
-                        </li>
-                        <li>
-                            <div>
-                                <textarea style="width: 100%" name="query" v-model="strategy" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8"></textarea>
-                            </div>
-                        </li>
-                    </ul>
+                    </ul></br>
+                    <div class="divider" data-content="DATABASE INFORMATION"></div>
+                    <div class="panel-body">
+                        <builder id="info-builder" v-for="(info, index) in infos"
+                                 :key="info.id"
+                                 v-on:add="addInfo"
+                                 v-on:remove="removeInfo"
+                                 v-bind:info="info"
+                                 v-bind:index="index"
+                                 v-bind:last="index==infos.length-1"></builder>
+                    </div>
                     <span class="span-sm">All tooltips are referenced from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2605027/" target="_blank"><i>Analysis of the reporting of search strategies in Cochrane systematic reviews</i></a> in J Med Libr Assoc 97(1) January 2009</span></br>
                     <span class="span-sm">Authors are: Adriana Yoshii, MLS, AHIP; Daphne A. Plaut, MLS, AHIP; Kathleen A. McGraw, MA, HLS; Margaret J. Anderson, MS; Kay E. Wellik, MLS, AHIP</span></br>
                     <span class="span-sm">DOI: 10.3163/1536-5050.97.1.004</span>
@@ -347,11 +325,34 @@
                     <li>
                         <input class="form-input" type="text" v-model="info.host" style="overflow:hidden;width:25%;" placeholder="Host That Hosts the Database Above" id="host">
                     </li>
+                    <li>
+                        <span class="span-rg">
+                            <strong>
+                                Complete Search Strategy
+                            </strong>
+                            <span style="color:red">
+                                *
+                            </span>
+                            :
+                            <div class="help-tip" style="z-index: 10">
+                                <p>The <i>Cochrane Handbook</i> indicates that search strategies should be copied and pasted rather than retyped to avoid unwanted errors.</br>
+                                    This is the most important element of the search report. The complete search strategy should be included so that the reader can assess
+                                    the quality of the search and, thus, the quality of the review. Inadequate searches or errors in search strategies can affect the quality
+                                    of the review and lead to bias. A complete search strategy is also essential when a review is revised or updated.
+                                </p>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <div>
+                            <textarea style="width: 100%" name="strategy" v-model="info.strategy" class="form-input" id="strategy-input" placeholder="Enter The Complete Search Query Here For The Database Above" rows="8"></textarea>
+                        </div>
+                    </li>
                 </ol>
                 <span class="span-sm">Use the + and - button below to add or remove information if multiple databases are used.</span></br>
                 <div class="btn-group">
-                    <a href="#" id="remove-info-from-builder" class="btn btn-action btn-sm" v-on:click="removeInfo"><i class="icon icon-minus"></i></a>
-                    <a href="#" id="add-info-to-builder" class="btn btn-action btn-sm" v-if="last" v-on:click="addInfo"><i class="icon icon-plus"></i></a>
+                    <a href="#/" id="remove-info-from-builder" class="btn btn-action btn-sm" v-on:click="removeInfo"><i class="icon icon-minus"></i></a>
+                    <a href="#/" id="add-info-to-builder" class="btn btn-action btn-sm" v-if="last" v-on:click="addInfo"><i class="icon icon-plus"></i></a>
                 </div>
             </div>
         </script>
@@ -385,7 +386,7 @@
                 delimiters: ["[[", "]"],
                 el: "#app",
                 data: {
-                    infos: [{date: null, database: null, host: null}],
+                    infos: [{date: null, database: null, host: null, strategy: null}],
 
                     init: false,
 
@@ -393,7 +394,6 @@
                     toYear: null,
                     summary: null,
                     langRestriction: null,
-                    strategy: null,
                     report: ""
                 },
                 methods: {
@@ -401,11 +401,11 @@
                         let self = this;
                         var infos = self.infos;
 
-                        if (!self.fromYear || !self.toYear || !self.summary || !self.langRestriction || !self.strategy) {
+                        if (!self.fromYear || !self.toYear || !self.summary || !self.langRestriction) {
                             window.alert("Information is incomplete, please fill all required information.")
                             return
                         }
-                        if (!infos[0].date || !infos[0].database) {
+                        if (!infos[0].date || !infos[0].database || !infos[0].strategy) {
                             window.alert("Information is incomplete, please fill all required information.")
                             return
                         }
@@ -415,14 +415,14 @@
                         const secondSentence = " databases in our search process. \n";
                         const databaseText = "The databases are: \n";
                         const databaseTextSupp = "The database is: \n";
-                        const hostText = " hosted by ";
-                        const searchDateText = ". And the search was conducted in [";
-                        const searchDateTextSupp = ", the search was conducted in [";
+                        const hostText = " database hosted by ";
+                        const searchDateText = " platform. And the search was conducted in [";
+                        const searchDateTextSupp = " database, the search was conducted in [";
                         const searchDateEndText = "] with years covered from ";
                         const yearCoverText = " to ";
                         const summaryText = "To summarise our search strategy: \n";
                         const langText = "There are some language restrictions applied to our search strategy: \n";
-                        const completeStrategyText = "The complete search strategy we used is as follows: \n";
+                        const completeStrategyText = "The complete search strategy we used for this database is as follows: \n";
 
                         var count = 0;
                         for (i = 0; i < infos.length; i++) {
@@ -442,14 +442,14 @@
                         for (i = 0; i < infos.length; i++) {
                             if (infos[i].database) {
                                 if (infos[i].host) {
-                                    temp = temp + infos[i].database + hostText + infos[i].host + searchDateText + infos[i].date + searchDateEndText + self.fromYear + yearCoverText + self.toYear + ".\n";
+                                    temp = temp + infos[i].database + hostText + infos[i].host + searchDateText + infos[i].date + searchDateEndText + self.fromYear + yearCoverText + self.toYear + ".\n" + completeStrategyText + infos[i].strategy + "\n";
                                 } else {
-                                    temp = temp + infos[i].database + searchDateTextSupp + infos[i].date + searchDateEndText + self.fromYear + yearCoverText + self.toYear + ".\n";
+                                    temp = temp + infos[i].database + searchDateTextSupp + infos[i].date + searchDateEndText + self.fromYear + yearCoverText + self.toYear + ".\n" + completeStrategyText + infos[i].strategy + "\n";
                                 }
                             }
                         }
 
-                        assembleReport = assembleReport + temp + summaryText + self.summary + "\n" + langText + self.langRestriction + "\n" + completeStrategyText + self.strategy;
+                        assembleReport = assembleReport + temp + summaryText + self.summary + "\n" + langText + self.langRestriction + "\n";
                         self.report = assembleReport;
                         self.init = true;
                     },
