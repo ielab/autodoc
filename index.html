@@ -400,6 +400,7 @@
                     formatReport: function () {
                         let self = this;
                         var infos = self.infos;
+
                         if (!self.fromYear || !self.toYear || !self.summary || !self.langRestriction || !self.strategy) {
                             window.alert("Information is incomplete, please fill all required information.")
                             return
@@ -408,32 +409,35 @@
                             window.alert("Information is incomplete, please fill all required information.")
                             return
                         }
-                        var firstSentence = "We are using ";
-                        var secondSentenceSupp = " database in our search process. \n";
-                        var secondSentence = " databases in our search process. \n";
-                        var databaseText = "The databases are: \n";
-                        var databaseTextSupp = "The database is: \n";
-                        var hostText = " hosted by ";
-                        var searchDateText = ". And the search was conducted in [";
-                        var searchDateTextSupp = ", the search was conducted in [";
-                        var searchDateEndText = "] with years covered from ";
-                        var yearCoverText = " to ";
-                        var summaryText = "To summarise our search strategy: \n";
-                        var langText = "There are some language restrictions applied to our search strategy: \n";
-                        var completeStrategyText = "The complete search strategy we used is as follows: \n";
+
+                        const firstSentence = "We are using ";
+                        const secondSentenceSupp = " database in our search process. \n";
+                        const secondSentence = " databases in our search process. \n";
+                        const databaseText = "The databases are: \n";
+                        const databaseTextSupp = "The database is: \n";
+                        const hostText = " hosted by ";
+                        const searchDateText = ". And the search was conducted in [";
+                        const searchDateTextSupp = ", the search was conducted in [";
+                        const searchDateEndText = "] with years covered from ";
+                        const yearCoverText = " to ";
+                        const summaryText = "To summarise our search strategy: \n";
+                        const langText = "There are some language restrictions applied to our search strategy: \n";
+                        const completeStrategyText = "The complete search strategy we used is as follows: \n";
+
                         var count = 0;
                         for (i = 0; i < infos.length; i++) {
                             if (infos[i].database && infos[i].date) {
                                 count += 1;
                             }
                         }
-                        var assembleReport = firstSentence + count;
 
+                        var assembleReport = firstSentence + count;
                         if (count > 1) {
                             assembleReport = assembleReport + secondSentence + databaseText;
                         } else {
                             assembleReport = assembleReport + secondSentenceSupp + databaseTextSupp;
                         }
+
                         var temp = "";
                         for (i = 0; i < infos.length; i++) {
                             if (infos[i].database) {
@@ -444,6 +448,7 @@
                                 }
                             }
                         }
+
                         assembleReport = assembleReport + temp + summaryText + self.summary + "\n" + langText + self.langRestriction + "\n" + completeStrategyText + self.strategy;
                         self.report = assembleReport;
                         self.init = true;
