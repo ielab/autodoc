@@ -55,6 +55,7 @@
             color: #FFF;
             font-size: 10px;
             line-height: 1.4;
+            z-index: 11;
         }
 
         .help-tip p:before{
@@ -92,6 +93,55 @@
             0% { opacity:0; }
             100% { opacity:100%; }
         }
+
+        .span-sm {
+            font-size: 10px;
+            line-height: 0.0rem;
+        }
+
+        .form-input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background: #fff;
+            background-image: none;
+            border: .05rem solid #bcc3ce;
+            border-radius: .1rem;
+            color: #3b4351;
+            display: block;
+            font-size: .8rem;
+            height: 1.8rem;
+            line-height: 1.2rem;
+            max-width: 100%;
+            outline: 0;
+            padding: .25rem .4rem;
+            position: relative;
+            transition: background .2s, border .2s, box-shadow .2s, color .2s;
+            width: 100%
+        }
+
+        .form-input:focus {
+            border-color: #5755d9;
+            box-shadow: 0 0 0 .1rem rgba(87, 85, 217, .2)
+        }
+
+        .form-input::-webkit-input-placeholder {
+            color: #bcc3ce
+        }
+
+        .form-input:-ms-input-placeholder {
+            color: #bcc3ce
+        }
+
+        .form-input::-ms-input-placeholder {
+            color: #bcc3ce
+        }
+
+        .form-input::placeholder {
+            color: #bcc3ce;
+            font-size: 12px;
+            font-family:"SF Mono","Segoe UI Mono","Roboto Mono",Menlo,Courier,monospace
+        }
     </style>
     <body>
         <div class="container p-2" id="app">
@@ -102,23 +152,17 @@
             <div class="panel p-2" style="overflow:hidden;">
                 <h2 style="margin-left: 2%; margin-top: 1%">Auto Doc</h2>
                 <div class="divider"></div>
-                <div class="panel-body container">
+                <div class="panel-body">
+                    <builder id="info-builder" v-for="(info, index) in infos"
+                             :key="info.id"
+                             v-on:add="addInfo"
+                             v-on:remove="removeInfo"
+                             v-bind:info="info"
+                             v-bind:index="index"
+                             v-bind:last="index==infos.length-1"></builder>
+                </div>
+                <div class="panel-footer container">
                     <ul style="list-style-type: none;">
-                        <li>
-                            <span class="span-rg">
-                                <strong>
-                                    Date Search Was Run
-                                </strong>
-                                <span style="color:red">
-                                    (Optional)
-                                </span>
-                                :
-                                <div class="help-tip">
-                                    <p>This is a tooltip</p>
-                                </div>
-                            </span>
-                        </li>
-                        <li><input class="panel-body" type="date" style="overflow:hidden;width:12%;" id="date"></li>
                         <li>
                             <span class="span-rg">
                                 <strong>
@@ -129,59 +173,19 @@
                                 </span>
                                 :
                                 <div class="help-tip">
-                                    <p>This is a tooltip</p>
+                                    <p>
+                                        Years covered by the search are those years the search was limited to or the years covered
+                                        by the database, if no limits were applied.</br>
+                                        This element is essential for enabling the reader to assess the comprehensiveness of the
+                                        search as well as for providing a reference point when a review is revised or updated.
+                                    </p>
                                 </div>
                             </span>
                         </li>
                         <li>
-                            <input class="panel-body" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="fromyear"> -
-                            <input class="panel-body" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="toyear">
+                            <input v-model="fromYear" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="fromyear"> -
+                            <input v-model="toYear" min="1800" max="2200" step="1" type="number" style="overflow:hidden;width:8%;" id="toyear">
                         </li>
-                        <li>
-                            <span class="span-rg">
-                                <strong>
-                                    Database Searched
-                                </strong>
-                                <span style="color:red">
-                                    *
-                                </span>
-                                :
-                                <div class="help-tip">
-                                    <p>This is a tooltip</p>
-                                </div>
-                            </span>
-                        </li>
-                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="database"></li>
-                        <li>
-                            <span class="span-rg">
-                                <strong>
-                                    Name of Host
-                                </strong>
-                                <span style="color:red">
-                                    (Optional)
-                                </span>
-                                :
-                                <div class="help-tip">
-                                    <p>This is a tooltip</p>
-                                </div>
-                            </span>
-                        </li>
-                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="host"></li>
-                        <li>
-                            <span class="span-rg">
-                                <strong>
-                                    Language Restriction
-                                </strong>
-                                <span style="color:red">
-                                    *
-                                </span>
-                                :
-                                <div class="help-tip">
-                                    <p>This is a tooltip</p>
-                                </div>
-                            </span>
-                        </li>
-                        <li><input class="panel-body" type="text" style="overflow:hidden;width:40%;" id="lang"></li>
                         <li>
                             <span class="span-rg">
                                 <strong>
@@ -192,62 +196,238 @@
                                 </span>
                                 :
                                 <div class="help-tip" style="z-index: 10">
-                                    <p>This is a tooltip</p>
+                                    <p>
+                                        The search strategy summary should be one or two lines that summaries the search strategy. </br>
+                                        A narrative explanation of the search provides the reader, especially one with limited detailed
+                                        search experience, with an overview of how the search was conducted. It is also helpful information
+                                        when a review is being revised or updated because it provides a clear explanation of the thought
+                                        process underlying the design and scope of a search.
+                                    </p>
                                 </div>
                             </span>
                         </li>
                         <li>
                             <div>
-                                <textarea style="width: 40%" name="summary" class="form-input" id="summary-input" placeholder="Enter The Search Strategy Summary" rows="2"></textarea>
+                                <textarea style="width: 40%" v-model="summary" name="summary" class="form-input" id="summary-input" placeholder="Enter The Search Strategy Summary" rows="2"></textarea>
                             </div>
                         </li>
                         <li>
                             <span class="span-rg">
                                 <strong>
-                                    Complete Query
+                                    Language Restrictions
+                                </strong>
+                                <span style="color:red">
+                                    *
+                                </span>
+                                :
+                                <div class="help-tip">
+                                    <p>
+                                        Language restrictions can lead to the omission of relevant research and reduce the comprehensiveness of the review.
+                                        Any restrictions, or lack thereof, should be clearly stated.
+                                    </p>
+                                </div>
+                            </span>
+                        </li>
+                        <li>
+                            <div>
+                                <textarea style="width: 40%" name="lang" v-model="langRestriction" class="form-input" id="lang-input" placeholder="Enter The Language Restrictions" rows="2"></textarea>
+                            </div>
+                        </li>
+                        <li>
+                            <span class="span-rg">
+                                <strong>
+                                    Complete Search Strategy
                                 </strong>
                                 <span style="color:red">
                                     *
                                 </span>
                                 :
                                 <div class="help-tip" style="z-index: 10">
-                                    <p>This is a tooltip</p>
+                                    <p>The <i>Cochrane Handbook</i> indicates that search strategies should be copied and pasted rather than retyped to avoid unwanted errors.</br>
+                                        This is the most important element of the search report. The complete search strategy should be included so that the reader can assess
+                                        the quality of the search and, thus, the quality of the review. Inadequate searches or errors in search strategies can affect the quality
+                                        of the review and lead to bias. A complete search strategy is also essential when a review is revised or updated.
+                                    </p>
                                 </div>
                             </span>
                         </li>
                         <li>
                             <div>
-                                <textarea style="width: 40%" name="query" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8"></textarea>
+                                <textarea style="width: 100%" name="query" v-model="strategy" class="form-input" id="query-input" placeholder="Enter The Complete Search Query Here" rows="8"></textarea>
                             </div>
                         </li>
                     </ul>
+                    <span class="span-sm">All tooltips are referenced from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2605027/" target="_blank"><i>Analysis of the reporting of search strategies in Cochrane systematic reviews</i></a> in J Med Libr Assoc 97(1) January 2009</span></br>
+                    <span class="span-sm">Authors are: Adriana Yoshii, MLS, AHIP; Daphne A. Plaut, MLS, AHIP; Kathleen A. McGraw, MA, HLS; Margaret J. Anderson, MS; Kay E. Wellik, MLS, AHIP</span></br>
+                    <span class="span-sm">DOI: 10.3163/1536-5050.97.1.004</span>
                 </div>
                 <div class="divider"></div>
-                <a href="#">Clear All</a>
+                <a href="#/" v-on:click="clearAll">Clear All</a>
                 <div class="panel-footer">
-                    <button class="btn btn-primary" id="generate-report">
-                        <i class="icon icon-forward"></i> Generate
+                    <button class="btn btn-primary" id="generate-report" v-on:click="formatReport">
+                        <i class="icon icon-forward"></i> Generate Report
                     </button>
-                    <div class="divider"></div>
+                    <div class="divider" v-show="!init"></div>
                     <p>Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
                     <div>
-                        <div style="text-align: center;"><h5>Search Strategy Report</h5></div>
-                        <div>
-                            <textarea style="width: 100%" name="report" class="form-input" id="report" rows="10"></textarea>
+                        <div style="text-align: center;" v-show="init"><h5>Search Strategy Report</h5></div>
+                        <div v-show="init">
+                            <textarea style="width: 100%" name="report" v-model="report" class="form-input" id="report" rows="10"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <script type="text/x-template" id="builder">
+            <div class="panel-body">
+                <ol style="list-style-type: none">
+                    <li>
+                        <span class="span-rg">
+                            <strong>
+                                Date Search Was Run
+                            </strong>
+                            <span style="color:red">
+                                *
+                            </span>
+                            :
+                            <div class="help-tip">
+                                <p>
+                                    Date search was run means the date when this search was conducted. </br>
+                                    Stating the month and year the search was run clearly defines the end point of the search
+                                    and provides necessary information when updating occurs. However the exact day the search
+                                    was executed is not absolutely necessary, because it is good practice to overlap the time period
+                                    of the new search with the old search to account for inconsistencies in database updates.
+                                </p>
+                            </div>
+                        </span>
+                    </li>
+                    <li><input class="form-input" v-model="info.date" type="month" min="1000-01" max="2200-12" style="overflow:hidden;width:18%;" id="date"></li>
+                    <li>
+                        <span class="span-rg">
+                            <strong>
+                                Databases Searched
+                            </strong>
+                            <span style="color:red">
+                                *
+                            </span>
+                            :
+                            <div class="help-tip">
+                                <p>
+                                    Databases searched refers to the names of the databases, such as MEDLINE. </br>
+                                    This element is essential, since research has shown that searching only one database,
+                                    such as MEDLINE, does not adequately capture the literature for a systematic review.
+                                    Searching more than one database is almost always necessary and is an important step
+                                    in the process. The reader needs this information to assess the quality of the review.
+                                </p>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <input class="form-input" type="text" v-model="info.database" style="overflow:hidden;width:25%;" placeholder="Database Used" id="database">
+                    </li>
+                    <li>
+                        <span class="span-rg">
+                            <strong>
+                                Name of Host
+                            </strong>
+                            <span style="color:red">
+                                (Optional)
+                            </span>
+                            :
+                            <div class="help-tip">
+                                <p>
+                                    The name of host refers to the platform on which the database is provided, such as Ovid, SilverPlatter, and EBSCO.</br>
+                                    The information helps make a search truly replicable.
+                                    The input syntax of bibliographic systems varies. The name of the host system gives information necessary to locate host-related
+                                    syntax information when a search is reported with unfamiliar syntax.
+                                </p>
+                            </div>
+                        </span>
+                    </li>
+                    <li>
+                        <input class="form-input" type="text" v-model="info.host" style="overflow:hidden;width:25%;" placeholder="Host That Hosts the Database Above" id="host">
+                    </li>
+                </ol>
+                <span class="span-sm">Use the + and - button below to add or remove information if multiple databases are used.</span></br>
+                <div class="btn-group">
+                    <a href="#" id="remove-info-from-builder" class="btn btn-action btn-sm" v-on:click="removeInfo"><i class="icon icon-minus"></i></a>
+                    <a href="#" id="add-info-to-builder" class="btn btn-action btn-sm" v-if="last" v-on:click="addInfo"><i class="icon icon-plus"></i></a>
+                </div>
+            </div>
+        </script>
+        <!--suppress JSUnusedGlobalSymbols -->
         <script>
+            var structuredID = 0;
+            Vue.component("builder", {
+                delimiters: ["[[", "]]"],
+                template: "#builder",
+                props: ["index", "last", "info"],
+                data: function () {
+                    return {
+                        id: structuredID++,
+                    }
+                },
+                methods: {
+                    removeInfo: function () {
+                        this.$emit("remove", this.$props.index);
+                    },
+                    addInfo: function () {
+                        this.$emit("add", {
+                            date: null,
+                            database: null,
+                            host: null,
+                        })
+                    },
+                }
+            });
+
             var vm = new Vue({
                 delimiters: ["[[", "]"],
                 el: "#app",
                 data: {
+                    infos: [{date: null, database: null, host: null}],
 
+                    init: false,
+
+                    fromYear: null,
+                    toYear: null,
+                    summary: null,
+                    langRestriction: null,
+                    strategy: null,
+                    report: ""
                 },
                 methods: {
+                    formatReport: function () {
+                        let self = this;
+                        var infos = self.infos;
+                        if (!self.fromYear || !self.toYear || !self.summary || !self.langRestriction || !self.strategy) {
+                            window.alert("Information is incomplete, please fill all required information.")
+                            return
+                        }
+                        if (!infos[0].date || !infos[0].database) {
+                            window.alert("Information is incomplete, please fill all required information.")
+                            return
+                        }
 
+                    },
+                    removeInfo: function (index) {
+                        this.infos.splice(index, 1)
+                        if (this.infos.length == 0) {
+                            this.infos.push({date: null, database: null, host: null});
+                        }
+                    },
+                    addInfo: function (info) {
+                        this.infos.push(info)
+                    },
+                    clearAll: function () {
+                        this.infos = [{date: null, database: null, host: null}];
+                        this.summary = null;
+                        this.fromYear = null;
+                        this.toYear = null;
+                        this.langRestriction = null;
+                        this.strategy = null;
+                        this.init = false;
+                    }
                 }
             })
         </script>
