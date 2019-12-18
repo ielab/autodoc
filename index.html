@@ -235,12 +235,13 @@
                                  v-bind:index="index"
                                  v-bind:last="index==infos.length-1"></builder>
                     </div>
-                    <span class="span-sm">All tooltips are referenced from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2605027/" target="_blank"><i>Analysis of the reporting of search strategies in Cochrane systematic reviews</i></a> in J Med Libr Assoc 97(1) January 2009</span></br>
+                    <div class="divider"></div>
+                    <span class="span-sm">*All tooltips are referenced from <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2605027/" target="_blank"><i>Analysis of the reporting of search strategies in Cochrane systematic reviews</i></a> in J Med Libr Assoc 97(1) January 2009</span></br>
                     <span class="span-sm">Authors are: Adriana Yoshii, MLS, AHIP; Daphne A. Plaut, MLS, AHIP; Kathleen A. McGraw, MA, HLS; Margaret J. Anderson, MS; Kay E. Wellik, MLS, AHIP</span></br>
                     <span class="span-sm">DOI: 10.3163/1536-5050.97.1.004</span>
                 </div>
                 <div class="divider"></div>
-                <a href="#/" v-on:click="clearAll">Clear All</a>
+                <a href="#/" v-on:click="clearAll" style="width: 5%">Clear All</a>
                 <div class="panel-footer">
                     <button class="btn btn-primary" id="generate-report" v-on:click="formatReport">
                         <i class="icon icon-forward"></i> Generate Report
