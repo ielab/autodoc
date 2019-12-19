@@ -241,7 +241,7 @@
                     <span class="span-sm">DOI: 10.3163/1536-5050.97.1.004</span>
                 </div>
                 <div class="divider"></div>
-                <a href="#/" v-on:click="clearAll" style="width: 5%">Clear All</a>
+                <a href="#/" v-on:click="clearAll" style="width: 10%">Clear All</a>
                 <div class="panel-footer">
                     <button class="btn btn-primary" id="generate-report" v-on:click="formatReport">
                         <i class="icon icon-forward"></i> Generate Report
@@ -249,9 +249,9 @@
                     <div class="divider"></div>
                     <p v-show="!init">Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
                     <div>
-                        <div style="text-align: center;" v-show="init"><h5>Search Strategy Report</h5></div>
+                        <div style="text-align: center;" v-show="init"><h3>Search Strategy Report</h3></div>
                         <div v-show="init">
-                            <textarea style="width: 100%" name="report" v-model="report" class="form-input" id="report" rows="10"></textarea>
+                            <textarea style="width: 100%" name="report" v-model="report" class="form-input" id="report" rows="20"></textarea>
                         </div>
                     </div>
                 </div>
