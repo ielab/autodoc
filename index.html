@@ -414,6 +414,10 @@
                             window.alert("Need Database Name to Validate Query!");
                             return;
                         }
+                        if (strategy === "" || strategy === null) {
+                            window.alert("Need Complete Search Strategy for Validation!");
+                            return;
+                        }
                         database = database.toLowerCase();
                         request.addEventListener("load", function (ev) {
                             if (ev.currentTarget.status === 200) {
