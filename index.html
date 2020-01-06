@@ -345,9 +345,6 @@
                                     of the review and lead to bias. A complete search strategy is also essential when a review is revised or updated.
                                 </p>
                             </div> &nbsp;
-                            <button class="btn btn-primary" id="validate-query" style="width: 6%; font-size: 11px; text-align: center" v-on:click="validateQuery(info.database, info.strategy)">
-                                Validate
-                            </button>
                         </span>
                         <div v-if="validateReady && (keyword || fields)" style="border: 1px solid blueviolet; margin-top: 8px; padding: 10px; width: 30%">
                             <span class="span-sm" v-if="keyword"><strong>Possible Typos in Keywords: </strong></span>
@@ -371,7 +368,7 @@
                     </li>
                     <li>
                         <div>
-                            <textarea style="width: 100%; float: left" v-model="info.strategy" class="form-input" id="strategy-input" placeholder="Enter The Complete Search Query Here For The Database Above" rows="8"></textarea>
+                            <textarea style="width: 100%; float: left" v-model="info.strategy" v-on:input="validateQuery(info.database, info.strategy)" class="form-input" id="strategy-input" placeholder="Enter The Complete Search Query Here For The Database Above" rows="8"></textarea>
                         </div>
                     </li>
                 </ol>
