@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="/static/logtail.css" type="text/css">
         <link rel="stylesheet" href="/static/searchrefiner.css" type="text/css">
         <script src="/static/vue.js" type="text/javascript"></script>
+        <script src="/static/lodash.min.js" type="text/javascript"></script>
     </head>
     <style>
         /* Thanks to https://tutorialzine.com/2014/07/css-inline-help-tips */
@@ -405,17 +406,15 @@
                             host: null,
                         })
                     },
-                    validateQuery: function (database, strategy) {
+                    validateQuery: _.debounce(function (database, strategy) {
                         let self = this;
                         self.validateReady = false;
                         var request = new XMLHttpRequest();
                         var typos = {"keyword":[],"field":[]};
                         if (database === "" || database === null) {
-                            window.alert("Need Database Name to Validate Query!");
                             return;
                         }
                         if (strategy === "" || strategy === null) {
-                            window.alert("Need Complete Search Strategy for Validation!");
                             return;
                         }
                         database = database.toLowerCase();
@@ -431,7 +430,7 @@
                         request.open("POST", "/api/validate");
                         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                         request.send("query=" + strategy + "&lang=" + database);
-                    }
+                    }, 300),
                 }
             });
 
