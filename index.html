@@ -181,6 +181,25 @@
                         <li>
                             <span class="span-rg">
                                 <strong>
+                                    Query Author
+                                </strong>
+                                <span style="color:red">
+                                    (Optional)
+                                </span>
+                                :
+                                <div class="help-tip">
+                                    <p>
+                                        The authors that construct this search query.
+                                    </p>
+                                </div>
+                            </span>
+                        </li>
+                        <li>
+                            <input class="form-input" type="text" v-model="authors" style="overflow:hidden;width:25%;" placeholder="Authors of the Search Query" id="authors">
+                        </li>
+                        <li>
+                            <span class="span-rg">
+                                <strong>
                                     Search Strategy Summary
                                 </strong>
                                 <span style="color:red">
@@ -447,6 +466,7 @@
                     summary: null,
                     langRestriction: null,
                     report: "",
+                    authors: null,
                 },
                 methods: {
                     formatReport: function () {
@@ -465,6 +485,7 @@
                         const firstSentence = "We are using ";
                         const secondSentenceSupp = " database in our search process. \n";
                         const secondSentence = " databases in our search process. \n";
+                        const authorsSentence = "The authors for the search strategies: \n";
                         const databaseText = "The databases are: \n";
                         const databaseTextSupp = "The database is: \n";
                         const hostText = " database hosted by ";
@@ -485,10 +506,20 @@
 
                         var assembleReport = firstSentence + count;
                         if (count > 1) {
-                            assembleReport = assembleReport + secondSentence + databaseText;
+                            if (self.authors != null && self.authors != "") {
+                                assembleReport = assembleReport + secondSentence + authorsSentence + self.authors + "\n" + databaseText;
+                            } else {
+                                assembleReport = assembleReport + secondSentence + databaseText;
+                            }
                         } else {
-                            assembleReport = assembleReport + secondSentenceSupp + databaseTextSupp;
+                            if (self.authors != null && self.authors != "") {
+                                assembleReport = assembleReport + secondSentenceSupp + authorsSentence + self.authors + "\n" + databaseTextSupp;
+                            } else {
+                                assembleReport = assembleReport + secondSentenceSupp + databaseTextSupp;
+                            }
                         }
+
+
 
                         var temp = "";
                         for (i = 0; i < infos.length; i++) {
