@@ -421,7 +421,7 @@
                     addInfo: function () {
                         this.$emit("add", {
                             date: null,
-                            database: null,
+                            database: "Pubmed",
                             host: null,
                         })
                     },
@@ -446,7 +446,7 @@
                                 self.validateReady = true;
                             }
                         });
-                        request.open("POST", "/api/validate");
+                        request.open("POST", "/plugin/autodoc?validate=y", true);
                         request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                         request.send("query=" + strategy + "&lang=" + database);
                     }, 300),
@@ -457,7 +457,7 @@
                 delimiters: ["[[", "]"],
                 el: "#app",
                 data: {
-                    infos: [{date: null, database: null, host: null, strategy: null}],
+                    infos: [{date: null, database: "Pubmed", host: null, strategy: null}],
 
                     init: false,
 
@@ -546,7 +546,7 @@
                         this.infos.push(info)
                     },
                     clearAll: function () {
-                        this.infos = [{date: null, database: null, host: null}];
+                        this.infos = [{date: null, database: "Pubmed", host: null}];
                         this.summary = null;
                         this.fromYear = null;
                         this.toYear = null;
