@@ -134,7 +134,7 @@ func (AutoDocPlugin) Details() searchrefiner.PluginDetails {
 		Title:       "AutoDoc",
 		Description: "Automatically generate search reports based on the information provided.",
 		Author:      "ielab",
-		Version:     "23.Jan.2019",
+		Version:     "23.Jan.2020",
 		ProjectURL:  "ielab.io/searchrefiner",
 	}
 }
