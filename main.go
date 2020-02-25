@@ -131,10 +131,10 @@ func (AutoDocPlugin) PermissionType() searchrefiner.PluginPermission {
 
 func (AutoDocPlugin) Details() searchrefiner.PluginDetails {
 	return searchrefiner.PluginDetails{
-		Title:       "Auto Doc",
-		Description: "Auto generate search reports based on the information provided.",
+		Title:       "AutoDoc",
+		Description: "Automatically generate search reports based on the information provided.",
 		Author:      "ielab",
-		Version:     "17.Dec.2019",
+		Version:     "23.Jan.2019",
 		ProjectURL:  "ielab.io/searchrefiner",
 	}
 }
