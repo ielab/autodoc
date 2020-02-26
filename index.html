@@ -266,6 +266,7 @@
                     <button class="btn btn-primary" id="generate-report" v-on:click="formatReport">
                         <i class="icon icon-forward"></i> Generate Report
                     </button>
+                    <a v-bind:href="sendContent">Send Report</a>
                     <div class="divider"></div>
                     <p v-show="!init">Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
                     <div>
@@ -291,7 +292,7 @@
                             :
                             <div class="help-tip">
                                 <p>
-                                    Date search was run means the date when this search was conducted. </br>
+                                    Date search was run means the date when this search was conducted. <br>
                                     Stating the month and year the search was run clearly defines the end point of the search
                                     and provides necessary information when updating occurs. However the exact day the search
                                     was executed is not absolutely necessary, because it is good practice to overlap the time period
@@ -465,8 +466,10 @@
                     toYear: null,
                     summary: null,
                     langRestriction: null,
-                    report: "",
+                    report: null,
                     authors: null,
+
+                    sendContent: null,
                 },
                 methods: {
                     formatReport: function () {
@@ -535,6 +538,7 @@
                         assembleReport = assembleReport + temp + summaryText + self.summary + "\n" + langText + self.langRestriction + "\n";
                         self.report = assembleReport;
                         self.init = true;
+                        self.sendContent = "mailto:?subject=Search Strategy Report&body=" + assembleReport.split("\n").join("%0D%0A");
                     },
                     removeInfo: function (index) {
                         this.infos.splice(index, 1)
