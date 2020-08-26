@@ -271,7 +271,7 @@
             <button class="btn btn-primary" id="generate-report" v-on:click="formatReport">
                 <i class="icon icon-forward"></i> Generate Report
             </button>
-            <a v-bind:href="sendContent">Send Report</a>
+            <a v-bind:href="sendContent">Send report via email</a>
             <div class="divider"></div>
             <p v-show="!init">Fill all the information above to generate the search report. Click the back link in the top left corner of the interface to return to the main page.</p>
             <div>
@@ -463,7 +463,7 @@
         delimiters: ["[[", "]"],
         el: "#app",
         data: {
-            infos: [{date: null, database: "Pubmed", host: null, strategy: null}],
+            infos: [{date: null, database: "Pubmed", host: null, strategy: {{.QueryString}}}],
 
             init: false,
 

@@ -121,7 +121,7 @@ func (AutoDocPlugin) Serve(s searchrefiner.Server, c *gin.Context) {
 	c.Render(http.StatusOK, searchrefiner.RenderPlugin(searchrefiner.TemplatePlugin("plugin/autodoc/index.html"), struct {
 		searchrefiner.Query
 		View string
-	}{searchrefiner.Query{QueryString: rawQuery, Language: lang}, c.Query("view")}))
+	}{searchrefiner.Query{QueryString: rawQuery, Language: lang, PluginTitle: "AutoDoc", Plugins: s.Plugins}, c.Query("view")}))
 	return
 }
 
@@ -134,8 +134,10 @@ func (AutoDocPlugin) Details() searchrefiner.PluginDetails {
 		Title:       "AutoDoc",
 		Description: "Automatically generate search reports based on the information provided.",
 		Author:      "ielab",
-		Version:     "23.Jan.2020",
+		Version:     "26.Aug.2020",
 		ProjectURL:  "ielab.io/searchrefiner",
+
+		AcceptsQueryPosts: true,
 	}
 }
 
